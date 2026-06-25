@@ -4,9 +4,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # 1. Define the Database URL.
-# We are using SQLite, which saves the database in a local file named 'students.db'.
-# 'sqlite:///' indicates the SQLite driver, followed by the path to the database file.
-SQLALCHEMY_DATABASE_URL = "sqlite:///./students.db"
+# We check if a DATABASE_URL environment variable is provided (useful for deployment with persistent disks).
+# Otherwise, we default to the local SQLite file 'students.db'.
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./students.db")
 
 # 2. Create the Database Engine.
 # The engine is the starting point for any SQLAlchemy application. It manages the connection pool.

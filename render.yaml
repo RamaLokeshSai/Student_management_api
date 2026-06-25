@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: student-management-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    # Attach a persistent disk to host the SQLite database file
+    disk:
+      name: sqlite-data
+      mountPath: /data
+      sizeGB: 1
+    # Tell our app to store the SQLite database on the persistent disk
+    envVars:
+      - key: DATABASE_URL
+        value: sqlite:////data/students.db
